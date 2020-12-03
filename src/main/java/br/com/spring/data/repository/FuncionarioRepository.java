@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 import br.com.spring.data.orm.Funcionario;
 
 @Repository
-public interface FuncionarioRepository extends CrudRepository<Funcionario, Long>{
-
+public interface FuncionarioRepository extends CrudRepository<Funcionario, Long> {
 	List<Funcionario> findByNome(String nome);
-	
-	@Query("SELECT f FROM Funcionario f WHERE f.nome = :nome AND f.salrio >= :salario AND f.dataContratacao = :data")
+
+	@Query("SELECT f FROM Funcionario f WHERE f.nome = :nome "
+			+ "AND f.salario >= :salario AND f.dataContratacao = :data")
 	List<Funcionario> findNomeSalarioMaiorDataContratacao(String nome, Double salario, LocalDate data);
+
+	@Query(value = "SELECT * FROM funcionarios f WHERE f.data_contratacao >= :data", nativeQuery = true)
+	List<Funcionario> findDataContratacaoMaior(LocalDate data);
 }

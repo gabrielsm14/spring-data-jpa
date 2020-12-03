@@ -13,7 +13,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "unidade_trabalho")
 public class UnidadeTrabalho {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -54,4 +53,8 @@ public class UnidadeTrabalho {
 		this.funcionarios = funcionarios;
 	}
 
+	@Override
+	public String toString() {
+		return "Unidades: " + "id:" + id + "| descricao:" + descricao + "| endereco:" + endereco;
+	}
 }

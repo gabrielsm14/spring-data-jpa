@@ -36,7 +36,7 @@ public class CrudFuncionarioService {
 	
 	public void inicial(Scanner scanner) {
 		while(system) {
-			System.out.println("Qual acao de cargo deseja executar");
+			System.out.println("Qual acao de funcionario deseja executar");
 			System.out.println("0 - Sair");
 			System.out.println("1 - Salvar");
 			System.out.println("2 - Atualizar");
@@ -92,7 +92,7 @@ public class CrudFuncionarioService {
         funcionario.setDataContratacao(LocalDate.parse(dataContratacao, formatter));
         Optional<Cargo> cargo = cargoRepository.findById(cargoId);
         funcionario.setCargo(cargo.get());
-        funcionario.setUnidadesTrabalhos(unidades);
+        funcionario.setUnidadeTrabalhos(unidades);
 
         funcionarioRepository.save(funcionario);
         System.out.println("Salvo");
@@ -135,6 +135,7 @@ public class CrudFuncionarioService {
 
         System.out.println("Digite o cargoId");
         Long cargoId = scanner.nextLong();
+
         Funcionario funcionario = new Funcionario();
         funcionario.setId(id);
         funcionario.setNome(nome);
@@ -155,7 +156,7 @@ public class CrudFuncionarioService {
 	
 	private void deletar(Scanner scanner) {
 		System.out.println("Id");
-		Long id = scanner.nextLong();
+		long id = scanner.nextLong();
 		funcionarioRepository.deleteById(id);
 		System.out.println("Deletado");
 	}

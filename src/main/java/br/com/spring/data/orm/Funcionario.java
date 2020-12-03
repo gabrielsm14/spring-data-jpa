@@ -12,10 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
+@Table(name = "funcionarios")
 public class Funcionario {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,16 +27,16 @@ public class Funcionario {
 	private String cpf;
 	private Double salario;
 	private LocalDate dataContratacao;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne
 	@JoinColumn(name = "cargo_id", nullable = false)
 	private Cargo cargo;
-	
-	
+
+	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "funcionarios_unidades", joinColumns = {
 			@JoinColumn(name = "fk_funcionario") }, inverseJoinColumns = { @JoinColumn(name = "fk_unidade") })
-	private List<UnidadeTrabalho> unidadesTrabalhos;
+	private List<UnidadeTrabalho> unidadeTrabalhos;
 
 	public Long getId() {
 		return id;
@@ -82,12 +86,17 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
-	public List<UnidadeTrabalho> getUnidadesTrabalhos() {
-		return unidadesTrabalhos;
+	public List<UnidadeTrabalho> getUnidadeTrabalhos() {
+		return unidadeTrabalhos;
 	}
 
-	public void setUnidadesTrabalhos(List<UnidadeTrabalho> unidadesTrabalhos) {
-		this.unidadesTrabalhos = unidadesTrabalhos;
+	public void setUnidadeTrabalhos(List<UnidadeTrabalho> unidadeTrabalhos) {
+		this.unidadeTrabalhos = unidadeTrabalhos;
 	}
 
+	@Override
+	public String toString() {
+		return "Funcionario: " + "id:" + id + "| nome:'" + nome + "| cpf:" + cpf + "| salario:" + salario
+				+ "| dataContratacao:" + dataContratacao + "| cargo:" + cargo.getDescricao();
+	}
 }
